@@ -1,12 +1,12 @@
 /// <reference types="Cypress" />
 
-export class Kayak {
+export default class KayakApp {
     navigateTo(url: string) : any{
         return cy.visit(url);
     }
 
-    getElementEndsWith(attr: string, pattern: string, alias: string) : any {
-        return cy.get(`[${attr}$=${pattern}]`).as(alias);
+    getElementEndsWith(attr: string, pattern: string) : any {
+        return cy.get(`[${attr}$=${pattern}]`);
     }
 
     getVisibleInputCount() : number {

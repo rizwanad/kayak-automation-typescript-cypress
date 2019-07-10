@@ -1,19 +1,32 @@
 /// <reference types="Cypress" />
 
-function getElementEndsWith(attr, pattern) {
-    return cy.get(`[${attr}$=${pattern}]`);
+class KayakApp {
+
+    constructor() {}
+    getElementEndsWith(attr, pattern){
+        return cy.get(`[${attr}$=${pattern}]`);
+    }
+
+    getVisibleInputCount() {
+        
+        let counter = 0;
+
+        const $originDisplayElem = Cypress.$('[id$=origin-airport-display]'),
+                $destinationDisplayElem = Cypress.$('[id$="destination-airport-display"]'),
+                $dateRangeDisplayStart = Cypress.$('[id$=dateRangeInput-display-start]'),
+                $dateRangeDisplayEnd = Cypress.$('[id$=dateRangeInput-display-end]');
+
+        if ($originDisplayElem) counter++;
+        if ($destinationDisplayElem) counter++;
+        if ($dateRangeDisplayStart) counter++;
+        if ($dateRangeDisplayEnd) counter++;
+        
+        return counter;
+    }
+
 }
 
-function getRoundTripInputsCount() {
-    return [
-        getElementEndsWith('origin-airport-display'),
-        getElementEndsWith('destination-airport-display'),
-        getElementEndsWith('dateRangeInput-display-start'),
-        getElementEndsWith('dateRangeInput-display-end')
-    ].length;
-}
-
-
+let App = new KayakApp();
 
 describe('Kayak travel site main page', () => {
     before(function () {
@@ -22,27 +35,19 @@ describe('Kayak travel site main page', () => {
     })
 
     it('round trip type', () => {
-        let inputsCount = getRoundTripInputsCount();
+        let inputsCount = App.getVisibleInputCount();
         expect(inputsCount).to.equal(4);
     })
 
-    it('origin city', () => {
-        cy.fixture('data.json').as('data').then(function () {
-            // this.data
+    // it('origin city', () => {
+    //     cy.fixture('data.json').as('data').then(function () {
+    //         // this.data
             
 
-        })
-    })
+    //     })
+    // })
 
 })
-
-function getUniqueId($form) {
-    let id = $form.attr('id');
-    return id.split('-')[0];
-}
-
-
-
 
     
     // it('read search filters and apply rules', () => {
