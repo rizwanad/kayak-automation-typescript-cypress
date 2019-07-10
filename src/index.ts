@@ -1,3 +1,8 @@
-class KayakApp {
-    constructor() {}
+
+
+export class KayakApp {
+    navigateTo() {
+        cy.visit();
+    }
+
 }
